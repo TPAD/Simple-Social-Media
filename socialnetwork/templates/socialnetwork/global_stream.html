@@ -1,0 +1,98 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+	<div>
+		<span id="id_logged_in_user_name">
+			{{user.username}}
+		</span>
+		<div class="dropdown">
+			<button class="drop-button" id="id_show_nav_button">
+				<b>&darr;</b>
+			</button>
+			<div class="drop-content">
+				<a href="{% url 'global_stream' %}" id="id_nav_global_stream"> Global Stream </a>
+				<a href="{% url 'follower_stream' %}" id="id_nav_follower_stream"> Follower Stream </a>
+				<a href="{% url 'user_profile_page' %}" id="id_nav_profile"> My Profile </a>
+				<a href="{% url 'logout' %}" id="id_nav_logout"> Logout </a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block page-name %}
+<span id="id_name_of_page">
+	Global Stream	
+</span>
+{% endblock %}
+
+{% block content %}
+<div class="new-post">
+	<form>
+		New Post: 
+		<input type="text" id="id_post_input_text" name="post_input">
+		<input type="submit" id="id_post_button">
+	</form>
+</div>
+
+<div class="post-feed">
+	<div class="post">
+		<a href="{% url 'goto_profile' name='Dwayne "The Rock" Johnson'%}" 
+		method="get" id="id_post_profile_1">
+			<i>Post by Dwayne "The Rock" Johnson - </i>
+		</a>
+		<span id="id_post_text_1">
+			The Jabroni beatin', pie eatin', trailblazin', eyebrow raisin'... -
+		</span>
+		<span id="id_post_date_time_1">
+			<i>2/11/2020 1:00am</i>
+		</span>
+	</div>
+	<div class="comments">
+		<a href="{% url 'goto_profile' name='"The Nature Boy" Ric Flair'%}" 
+		method="get" id="id_comment_profile_2">
+			<i>Post by "The Nature Boy" Rick Flair - </i>
+		</a>
+		<span id="id_comment_text_2">
+			WOOOOOOOOOOOOOOOOO! -
+		</span>
+		<span id="id_comment_date_time_2">
+			<i>2/11/2020 1:32am</i>
+		</span>
+		<form>
+			Comment: 
+			<input type="text" id="id_comment_input_text_1" name="comment_input">
+			<input type="submit" id="id_comment_button_1">
+		</form>
+	</div>
+	<div class="post">
+		<a href="{% url 'goto_profile' name='"The Game" HHH'%}" 
+		method="get" id="id_post_profile_10">
+			<i>Post by "The Game" Triple H - </i>
+		</a>
+		<span id="id_post_text_10">
+			You're probably right; he probably needs medication. That's all. -
+		</span>
+		<span id="id_post_date_time_10">
+			<i>2/11/2020 4:12am</i>
+		</span>
+	</div>
+	<div class="comments">
+		<a href="{% url 'goto_profile' name='"The Heartbreak Kid" Shawn Michaels'%}" method="get" id="id_comment_profile_20">
+			<i>Post by "The Heartbreak Kid" Shawn Michaels- </i>
+		</a>
+		<span id="id_comment_text_20">
+			Lord knows, if it's on the internet, it's got to be true! -
+		</span>
+		<span id="id_comment_date_time_20">
+			<i>2/11/2020 4:55am</i>
+		</span>
+		<form>
+			Comment: 
+			<input type="text" id="id_comment_input_text_10" name="comment_input">
+			<input type="submit" id="id_comment_button_10">
+		</form>
+	</div>
+</div>
+{% csrf_token %}
+
+{% endblock %}

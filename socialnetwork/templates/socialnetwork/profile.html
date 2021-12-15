@@ -1,0 +1,84 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+	<div>
+		<span id="id_logged_in_user_name">
+			{{user.username}}
+		</span>
+		<div class="dropdown">
+			<button class="drop-button" id="id_show_nav_button">
+				<b>&darr;</b>
+			</button>
+			<div class="drop-content">
+				<a href="{% url 'global_stream' %}" id="id_nav_global_stream"> Global Stream </a>
+				<a href="{% url 'follower_stream' %}" id="id_nav_follower_stream"> Follower Stream </a>
+				<a href="{% url 'user_profile_page' %}" id="id_nav_profile"> My Profile </a>
+				<a href="{% url 'logout' %}" id="id_nav_logout"> Logout </a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block page-name %}
+<div>
+	<span id="id_name_of_page">
+		Profile Page for {{name}}	
+	</span>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if name == 'Dwayne "The Rock" Johnson' %}
+<div class="profile-image">
+	<img src="/static/img/therock.jpg" id="id_user_picture" width="260" height="340">
+</div>
+<div class="profile-text">
+	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">Can you smell what the rock is cooking?</textarea>
+</div>
+<div class="unfollow-button">
+	<button id="id_unfollow">
+		Unfollow
+	</button>
+</div>
+{% elif name == '"The Nature Boy" Ric Flair' %}
+<div class="profile-image">
+	<img src="/static/img/rickflair.jpg" id="id_user_picture" width="260" height="340">
+</div>
+<div class="profile-text">
+	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">WOOOOOOOOOOOOOOOO!</textarea>
+</div>
+<div class="unfollow-button">
+	<button id="id_unfollow">
+		Unfollow
+	</button>
+</div>
+{% elif name == '"The Game" HHH' %}
+<div class="profile-image">
+	<img src="/static/img/hhh.jpg" id="id_user_picture" width="260" height="340">
+</div>
+<div class="profile-text">
+	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">I Am the Game and I Am That Damn Good!</textarea>
+</div>
+<div class="unfollow-button">
+	<button id="id_unfollow">
+		Unfollow
+	</button>
+</div>
+{% elif name == '"The Heartbreak Kid" Shawn Michaels' %}
+<div class="profile-image">
+	<img src="/static/img/shawn.png" id="id_user_picture" width="260" height="340">
+</div>
+<div class="profile-text">
+	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">I Am the Showstopper, the Icon, the Main Event!</textarea>
+</div>
+<div class="unfollow-button">
+	<button id="id_unfollow">
+		Unfollow
+	</button>
+</div>
+{% endif %}
+
+
+
+{% csrf_token %}
+{% endblock %}

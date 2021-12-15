@@ -1,0 +1,73 @@
+{% extends "socialnetwork/base.html" %}
+
+{% block user-info %}
+	<div>
+		<span id="id_logged_in_user_name">
+			{{user.username}}
+		</span>
+		<div class="dropdown">
+			<button class="drop-button" id="id_show_nav_button">
+				<b>&darr;</b>
+			</button>
+			<div class="drop-content">
+				<a href="{% url 'global_stream' %}" id="id_nav_global_stream"> Global Stream </a>
+				<a href="{% url 'follower_stream' %}" id="id_nav_follower_stream"> Follower Stream </a>
+				<a href="{% url 'user_profile_page' %}" id="id_nav_profile"> My Profile </a>
+				<a href="{% url 'logout' %}" id="id_nav_logout"> Logout </a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block page-name %}
+<div>
+	<span id="id_name_of_page">
+		{{user.first_name}}	{{user.last_name}} Profile
+	</span>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<form action="update_profile" method="post" action='update_profile'>
+	<div class="profile-image">
+	<img src="static/img/def.JPG" id="id_user_picture" width="260" height="340">
+	</div>
+	<div class="profile-text">
+		<textarea type="text" class="bio-text" id="id_bio_input_text" cols="55" name="bio_text">{{bio_text}}</textarea>
+	</div>
+	<div class="submission-button">
+	Profile Picture
+	<button id="id_profile_picture">
+		Choose File
+	</button>
+	No file Chosen
+	</div>
+	<div class="submission-button">
+		<button id="id_update_profile_button">
+		Submit
+		</button>
+	</div>
+	{% csrf_token %}
+</form>
+<div class="followers">
+	You are following: 
+	<ul>
+		<a 
+		href="{% url 'goto_profile' name='Dwayne "The Rock" Johnson'%}" 
+		method="get"
+		><li id="id_profile_link_1"> Dwayne "The Rock" Johnson </li></a>
+
+		<a 
+		href="{% url 'goto_profile' name='"The Nature Boy" Ric Flair'%}" 
+		method="get"
+		><li id="id_profile_link_2"> "The Nature Boy" Ric Flair </li></a>
+
+		<a 
+		href="{% url 'goto_profile' name='"The Game" HHH'%}" 
+		method="get"
+		><li id="id_profile_link_10"> "The Game" HHH </li></a>
+	</ul>
+</div>
+{% csrf_token %}
+{% endblock %}
