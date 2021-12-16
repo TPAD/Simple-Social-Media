@@ -3,7 +3,7 @@
 {% block user-info %}
 	<div>
 		<span id="id_logged_in_user_name">
-			{{user.username}}
+			{{c_user.fname}} {{c_user.lname}}
 		</span>
 		<div class="dropdown">
 			<button class="drop-button" id="id_show_nav_button">
@@ -22,52 +22,54 @@
 {% block page-name %}
 <div>
 	<span id="id_name_of_page">
-		{{user.first_name}}	{{user.last_name}} Profile
+		{{c_user.fname}} {{c_user.lname}} Profile
 	</span>
 </div>
 
 {% endblock %}
 
 {% block content %}
-<form action="update_profile" method="post" action='update_profile'>
+<form action="add_photo" method="post" enctype="multipart/form-data">
 	<div class="profile-image">
-	<img src="static/img/def.JPG" id="id_user_picture" width="260" height="340">
+		{% if not c_user.picture %}
+		<img src="static/img/default.png" id="id_user_picture" width="260" height="340">
+		{% else %}
+		<img src="{% url 'photo' c_user.id %}" id="id_user_picture" width="260" height="340">
+		{% endif %}
+
 	</div>
 	<div class="profile-text">
-		<textarea type="text" class="bio-text" id="id_bio_input_text" cols="55" name="bio_text">{{bio_text}}</textarea>
+		<textarea type="text" class="bio-text" id="id_bio_input_text" cols="55" name="bio_text">{{c_user.bio}}</textarea>
 	</div>
 	<div class="submission-button">
-	Profile Picture
-	<button id="id_profile_picture">
-		Choose File
-	</button>
-	No file Chosen
-	</div>
-	<div class="submission-button">
-		<button id="id_update_profile_button">
-		Submit
-		</button>
+	<table>
+	    {% for field in form.visible_fields %}
+	        <tr>
+	            <td>{{field.label_tag}}</td>
+	            <td>{{field}}</td>
+	            <td class="error">
+	                {% for error in field.errors %} {{error}} {% endfor %}
+	            </td>
+	        </tr>
+	    {% endfor %}
+	    <tr><td colspan="3"><input type="submit" value="Submit"></td></tr>
+	</table>
 	</div>
 	{% csrf_token %}
 </form>
 <div class="followers">
 	You are following: 
 	<ul>
+		{% for followed in following %}
 		<a 
-		href="{% url 'goto_profile' name='Dwayne "The Rock" Johnson'%}" 
+		href="{% url 'goto_profile' followed %}" 
 		method="get"
-		><li id="id_profile_link_1"> Dwayne "The Rock" Johnson </li></a>
-
-		<a 
-		href="{% url 'goto_profile' name='"The Nature Boy" Ric Flair'%}" 
-		method="get"
-		><li id="id_profile_link_2"> "The Nature Boy" Ric Flair </li></a>
-
-		<a 
-		href="{% url 'goto_profile' name='"The Game" HHH'%}" 
-		method="get"
-		><li id="id_profile_link_10"> "The Game" HHH </li></a>
+		><li id="id_profile_link_{{followed.user.id}}"> {{followed.first_name}} {{followed.last_name}} </li></a>
+		{% endfor %}
 	</ul>
+</div>
+<div class="followers">
+
 </div>
 {% csrf_token %}
 {% endblock %}

@@ -124,3 +124,11 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+
+.error {
+	padding-top: 25px;
+	padding-bottom: 25px;
+	font-family: sans-serif;
+	color:red;
+	text-align: center;
+}

@@ -2,6 +2,7 @@ from django import forms
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from socialnetwork.models import Profile
 
 class LoginForm(forms.Form):
 	username = forms.CharField(max_length = 20)
@@ -48,4 +49,21 @@ class RegistrationForm(forms.Form):
 
 			return username
 
+
+MAX_UPLOAD_SIZE = 2500000
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ( 'picture',)
+
+    def clean_picture(self):
+        picture = self.cleaned_data['picture']
+        if not picture:
+            raise forms.ValidationError('You must upload a picture')
+        if not picture.content_type or not picture.content_type.startswith('image'):
+            raise forms.ValidationError('File type is not image')
+        if picture.size > MAX_UPLOAD_SIZE:
+            raise forms.ValidationError('File too big (max size is {0} bytes)'.format(MAX_UPLOAD_SIZE))
+        return picture
 

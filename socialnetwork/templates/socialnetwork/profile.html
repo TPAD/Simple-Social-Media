@@ -3,7 +3,7 @@
 {% block user-info %}
 	<div>
 		<span id="id_logged_in_user_name">
-			{{user.username}}
+			{{c_user.fname}} {{c_user.lname}}
 		</span>
 		<div class="dropdown">
 			<button class="drop-button" id="id_show_nav_button">
@@ -28,57 +28,25 @@
 {% endblock %}
 
 {% block content %}
-{% if name == 'Dwayne "The Rock" Johnson' %}
-<div class="profile-image">
-	<img src="/static/img/therock.jpg" id="id_user_picture" width="260" height="340">
-</div>
-<div class="profile-text">
-	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">Can you smell what the rock is cooking?</textarea>
-</div>
-<div class="unfollow-button">
-	<button id="id_unfollow">
-		Unfollow
-	</button>
-</div>
-{% elif name == '"The Nature Boy" Ric Flair' %}
-<div class="profile-image">
-	<img src="/static/img/rickflair.jpg" id="id_user_picture" width="260" height="340">
-</div>
-<div class="profile-text">
-	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">WOOOOOOOOOOOOOOOO!</textarea>
-</div>
-<div class="unfollow-button">
-	<button id="id_unfollow">
-		Unfollow
-	</button>
-</div>
-{% elif name == '"The Game" HHH' %}
-<div class="profile-image">
-	<img src="/static/img/hhh.jpg" id="id_user_picture" width="260" height="340">
-</div>
-<div class="profile-text">
-	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">I Am the Game and I Am That Damn Good!</textarea>
-</div>
-<div class="unfollow-button">
-	<button id="id_unfollow">
-		Unfollow
-	</button>
-</div>
-{% elif name == '"The Heartbreak Kid" Shawn Michaels' %}
-<div class="profile-image">
-	<img src="/static/img/shawn.png" id="id_user_picture" width="260" height="340">
-</div>
-<div class="profile-text">
-	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">I Am the Showstopper, the Icon, the Main Event!</textarea>
-</div>
-<div class="unfollow-button">
-	<button id="id_unfollow">
-		Unfollow
-	</button>
-</div>
+
+{% if not profile.picture %}
+	<div class="profile-image">
+		<img src="/static/img/default.png" id="id_user_picture" width="260" height="340">
+	</div>
 {% endif %}
-
-
-
-{% csrf_token %}
+<div class="profile-text">
+	<textarea readonly type="text" class="bio-text" id="id_user_bio" cols="55" name="bio_text">{{profile.bio}}</textarea>
+</div>
+<div class="unfollow-button">
+	<form method="post" action="{% url 'update_follow' profile.user %}">
+		<button id="id_unfollow">
+			{% if following == True %}
+				Unfollow
+			{% elif following == False %}
+				Follow
+			{% endif %}
+		</button>
+		{% csrf_token %}
+	</form>
+</div>
 {% endblock %}

@@ -27,6 +27,9 @@ urlpatterns = [
     path('follower_stream', views.follower_stream_action, name='follower_stream'),
     path('user_profile_page', views.profile_page_action, name='user_profile_page'),
     path('update_profile', views.update_profile, name='update_profile'),
-    path('goto_profile/<name>', views.goto_profile, name='goto_profile'),
-    path('update_follow', views.goto_profile, name='update_follow'),
+    path('goto_profile/<user>', views.goto_profile, name='goto_profile'),
+    path('update_follow/<user>', views.update_follow, name='update_follow'),
+    path('create_post', views.create_post, name='create_post'),
+    path('add_photo', views.add_propic, name='add_photo'),
+    path('photo/<id>', views.get_photo, name='photo'),
 ]
